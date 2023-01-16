@@ -23,6 +23,7 @@ class Qbit:
         self.b = b/n
         self.idx = 0
         
+    #helper method to construct Qbits with binary states
     def lazy(i: bool = False):
         if i: return Qbit.neg(Qbit())
         return Qbit()
@@ -58,7 +59,7 @@ class Qbit:
                     self.a*bit.a+self.b*bit.b)]
         
     def ccnot(self, bita: 'Qbit', bitb: 'Qbit'):
-        return[Qbit(bita), Qbit(bitb), 
+        return[Qbit(bita.a, bita.b), Qbit(bitb.a, bitb.b), 
                Qbit(self.a*bita.a+bitb.a,self.b*bitb.a+bitb.b)]
         
     def phase(self):
