@@ -1,6 +1,14 @@
-# Basic Quantum computer simulator
+# GraciousQsim
 # Author: Grace Unger
 # Modified: 1-15-2023
+
+# Basic quantum computer simulator, implementing
+# quantum logic gates on a bitwise and statewise level
+# 
+# All gates are without side effects - we preserve the 
+# input and output bits separately. This should probably
+# change as the number of bits increases.
+
 import numpy as np
 import cmath as cm
 from math import pi, sqrt
@@ -8,11 +16,16 @@ from math import pi, sqrt
 class Qbit:
     
     # defines a new qbit object a|0> + b|1>
-    def __init__(self, a: complex = complex(0,0), b: complex = complex(1,0)):
+    # Defaults to 1|0> + 0|1>
+    def __init__(self, a: complex = complex(1,0), b: complex = complex(0,0)):
         n = abs(a)+abs(b)
         self.a = a/n
         self.b = b/n
         self.idx = 0
+        
+    def lazy(i: bool = False):
+        if i: return Qbit.neg(Qbit())
+        return Qbit()
                 
     def __str__(self):
         return f"{str(self.a)[:6]}|0> + {str(self.b)[:6]}|1>"
@@ -38,6 +51,7 @@ class Qbit:
     def swap(self, bit: 'Qbit'):
         return [Qbit(bit.a, bit.b), Qbit(self.a, self.b)]
     
+    # input x,y, return x, x^y
     def cnot(self, bit: 'Qbit'):
         return[Qbit(self.a, self.b),
                Qbit(self.a *bit.b+self.b *bit.a,
@@ -45,7 +59,7 @@ class Qbit:
         
     def ccnot(self, bita: 'Qbit', bitb: 'Qbit'):
         return[Qbit(bita), Qbit(bitb), 
-               bita.b*bitb.b*self.a+bita.a+bitb.a*self.b]
+               Qbit(self.a*bita.a+bitb.a,self.b*bitb.a+bitb.b)]
         
     def phase(self):
         return (Qbit(self.a, cm.j * self.b))
