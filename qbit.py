@@ -60,7 +60,7 @@ class Qbit:
         
     def ccnot(self, bita: 'Qbit', bitb: 'Qbit'):
         return[Qbit(bita.a, bita.b), Qbit(bitb.a, bitb.b), 
-               Qbit(self.a*bita.a+bitb.a,self.b*bitb.a+bitb.b)]
+               Qbit(self.a*bita.a+bitb.a,self.b*bita.b+bitb.b)]
         
     def phase(self):
         return (Qbit(self.a, cm.j * self.b))
@@ -83,7 +83,7 @@ class Qbit:
 class State:
     
     def __init__(self, bits: list([Qbit])):
-        self.stateArray = product = self.tensor(bits)
+        self.stateArray = self.tensor(bits)
         
     # Computes the tensor product of n cubits, 
     # returning a 2^n x 1 state vector 

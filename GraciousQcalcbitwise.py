@@ -1,4 +1,4 @@
-# GraciousQcalc
+# GraciousQcalc-Bitwise
 # Author: Grace Unger
 # Modified: 1-15-23
 
